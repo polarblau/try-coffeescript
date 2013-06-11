@@ -1,0 +1,122 @@
+@import "vendor/normalize"
+@import "vendor/bourbon/bourbon"
+
+$before-dawn: #202020
+$darker     : #272822
+$dark       : #2F3129
+$medium     : #8F908A
+$bright     : #F8F8F2
+$red        : #ff0000
+$blue       : #66D9EF
+
+html, body
+  height: 100%
+  background: $darker
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace
+
+%box
+%container
+  position: absolute
+  left: 0
+  right: 0
+  bottom: 0
+  top: 0
+
+%editor
+  font-size: 14px !important
+  line-height: 1.4em !important
+
+%errors
+  @extend %container
+  top: auto
+  color: $bright
+  background: transparentize($red, 0.2)
+  z-index: 9998
+  display: none
+  padding: 10px
+  font-size: 0.8em
+
+header
+  text-align: right
+  padding: 0 10px
+  background: $before-dawn
+  box-shadow: 0 3px 5px transparentize(black, 0.75)
+  z-index: 999
+  position: relative
+
+  .fullscreen
+    background: transparent url(../images/fullscreen.png) no-repeat right center
+    padding: 0 25px 0 0
+    border: none
+    color: $bright
+    font-size: 0.8em
+    line-height: 2.4em
+    font-family: sans-serif
+
+#source
+  @extend %container
+  top: 2em
+  right: 50%
+
+  // ace editor
+  .editor
+    @extend %container
+    @extend %editor
+
+  // CS errors
+  .errors
+    @extend %errors
+
+#output
+  @extend %container
+  top: 2em
+  left: 50%
+
+  // ace editor
+  .editor
+    @extend %container
+    @extend %editor
+    bottom: 200px
+
+  // JS errors
+  .errors
+    @extend %errors
+    bottom: 200px
+
+  // console
+  .console
+    @extend %container
+    bottom: 0
+    top: auto
+    height: 199px // + 1px border = 200px
+    font-size: 14px
+    border-top: 1px solid $bright
+    color: $medium
+    overflow: auto
+
+    .line
+      padding: 0.5em 20px 0.5em 40px
+      border-bottom: 1px solid $dark
+      position: relative
+      +clearfix
+
+      &:before
+        position: absolute
+        content: ">"
+        color: $blue
+        left: 0
+        line-height: 1.2em
+        width: 40px
+        text-align: center
+
+    .line-item
+      display: inline-block
+      color: $bright
+      top: 0
+      margin: 0 20px 0 0
+      vertical-align: top
+
+  // invisible button
+  .run
+    @extend %container
+    opacity: 0

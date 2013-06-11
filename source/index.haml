@@ -1,0 +1,32 @@
+!!! 5
+%html.no-js(lang="en")
+  %head
+    %meta(charset="utf-8")
+    %title Try CoffeeScript
+    %meta(name="description" content="")
+    %meta(name="viewport" content="width=device-width, initial-scale=1")
+    %link(href="/favicon.ico" shortcut="shortcut icon")
+    %link(href="stylesheets/screen.css" rel="stylesheet")
+  %body
+
+    %article
+      %header
+        -#
+          %a(href="" title="Source code on Github")
+            Fork us on Github
+        %button.fullscreen Fullscreen
+
+      %section#source
+        .editor
+        .errors
+      %section#output
+        .editor
+        .console
+        .errors
+        %button.run Execute
+
+    %script(src="javascripts/vendor/jquery.min.js")
+    %script(src="javascripts/vendor/ace/ace.js")
+    %script(src="javascripts/vendor/coffeescript.min.js")
+    %script(src="javascripts/vendor/fullscreen.min.js")
+    %script(src="javascripts/application.js")
