@@ -62,7 +62,7 @@ $ ->
   source.editor.setTheme("ace/theme/#{THEME}")
   source.editor.getSession().setMode('ace/mode/coffee')
   source.editor.getSession().setUseWrapMode(true)
-  output.editor.setShowPrintMargin(false)
+  source.editor.setShowPrintMargin(false)
   source.editor.getSession().setTabSize(2)
 
   output.editor.setTheme("ace/theme/#{THEME}")
