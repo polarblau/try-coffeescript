@@ -2,7 +2,7 @@
   var __slice = [].slice;
 
   $(function() {
-    var $output, $source, THEME, consoleLog, evalOutput, hideErrors, log, output, showGlobalError, showSourceError, source;
+    var $output, $source, THEME, consoleLog, evalOutput, hideErrors, log, output, showEvalError, showSourceError, source;
 
     THEME = 'monokai';
     $source = $('#source');
@@ -60,7 +60,7 @@
     showSourceError = function(line, message) {
       return source.$errors.show().text("[Line " + line + "] " + message);
     };
-    showGlobalError = function(line, message, url) {
+    showEvalError = function(line, message, url) {
       return output.$errors.show().text("[Line " + line + "] " + message);
     };
     hideErrors = function() {
@@ -75,7 +75,7 @@
       } catch (_error) {
         e = _error;
         lineInfo = e.stack.match(/\<anonymous\>\:(\d+):\d+/);
-        return showGlobalError(lineInfo != null ? lineInfo[1] : void 0, e.message);
+        return showEvalError(lineInfo != null ? lineInfo[1] : void 0, e.message);
       }
     };
     source.editor = ace.edit(source.$editor.get('0'));

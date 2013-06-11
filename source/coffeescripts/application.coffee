@@ -44,7 +44,7 @@ $ ->
   showSourceError = (line, message)->
     source.$errors.show().text "[Line #{line}] #{message}"
 
-  showGlobalError = (line, message, url)->
+  showEvalError = (line, message, url)->
     output.$errors.show().text "[Line #{line}] #{message}"
 
   hideErrors = ->
@@ -56,7 +56,7 @@ $ ->
       eval(output.editor.getValue())
     catch e
       lineInfo = e.stack.match /\<anonymous\>\:(\d+):\d+/
-      showGlobalError lineInfo?[1], e.message
+      showEvalError lineInfo?[1], e.message
 
   # init ace editors
   source.editor = ace.edit source.$editor.get('0')
