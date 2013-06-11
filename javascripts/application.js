@@ -61,14 +61,22 @@
       return source.$errors.show().text("[Line " + line + "] " + message);
     };
     showGlobalError = function(line, message, url) {
-      return output.$errors.show().text(message);
+      return output.$errors.show().text("[Line " + line + "] " + message);
     };
     hideErrors = function() {
       source.$errors.hide();
       return output.$errors.hide();
     };
     evalOutput = function() {
-      return eval(output.editor.getValue());
+      var e, lineInfo;
+
+      try {
+        return eval(output.editor.getValue());
+      } catch (_error) {
+        e = _error;
+        lineInfo = e.stack.match(/\<anonymous\>\:(\d+):\d+/);
+        return showGlobalError(lineInfo != null ? lineInfo[1] : void 0, e.message);
+      }
     };
     source.editor = ace.edit(source.$editor.get('0'));
     output.editor = ace.edit(output.$editor.get('0'));
@@ -101,7 +109,7 @@
     $('header .fullscreen').on('click', function() {
       return $(document).toggleFullScreen();
     });
-    $(document).on('keydown', function(e) {
+    return $(document).on('keydown', function(e) {
       if (e.which === 13 && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
         return evalOutput();
@@ -109,12 +117,6 @@
         e.preventDefault();
         return $(document).toggleFullScreen();
       }
-    });
-    return $(window).on('error', function(e) {
-      var filename, lineno, message, _ref;
-
-      _ref = e.originalEvent, lineno = _ref.lineno, message = _ref.message, filename = _ref.filename;
-      return showGlobalError(lineno, message, filename.replace(/^.*[\\\/]/, ''));
     });
   });
 

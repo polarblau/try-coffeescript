@@ -45,14 +45,18 @@ $ ->
     source.$errors.show().text "[Line #{line}] #{message}"
 
   showGlobalError = (line, message, url)->
-    output.$errors.show().text(message)
+    output.$errors.show().text "[Line #{line}] #{message}"
 
   hideErrors = ->
     source.$errors.hide()
     output.$errors.hide()
 
   evalOutput = ->
-    eval(output.editor.getValue())
+    try
+      eval(output.editor.getValue())
+    catch e
+      lineInfo = e.stack.match /\<anonymous\>\:(\d+):\d+/
+      showGlobalError lineInfo?[1], e.message
 
   # init ace editors
   source.editor = ace.edit source.$editor.get('0')
@@ -78,7 +82,7 @@ $ ->
     try
       compiledValue = CoffeeScript.compile(sourceValue, bare: on)
       output.editor.setValue(compiledValue)
-    catch e#{location, message}
+    catch e
       showSourceError(e.location.first_line + 1, e.message)
 
 
@@ -101,8 +105,3 @@ $ ->
     else if e.which == 70 and (e.metaKey or e.ctrlKey)
       e.preventDefault()
       $(document).toggleFullScreen()
-
-  # display global errors in caused by eval
-  $(window).on 'error', (e)->
-    {lineno, message, filename} = e.originalEvent
-    showGlobalError lineno, message, filename.replace(/^.*[\\\/]/, '')
